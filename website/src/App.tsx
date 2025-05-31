@@ -1,46 +1,56 @@
+`use strict`;
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import Typography from '@mui/joy/Typography';
-function App() {
-  return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-  function main() {
+import ReactDOM from 'react-dom/client';
+import './App.css';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { createTheme, ThemeProvider } from '@mui/joy/styles';
+import { CssBaseline } from '@mui/joy';
+
+
+
+
+const TEXT = main();
+
+
+
+
+
+function App() 
+{
+
+  return TEXT;
+  export default main;
+}
+
+
+
+
+
+
+
+
+
+  function main () 
+  {
     console.log('Main function called');
     console.log('Hello, World!');
-    return (
-      // Returning a Typography component with specific styles
+     return (
+         <header>
       <h1 id='header'>
-        <Typography
-          level='h1'
-          sx={{-
+        <Typography React component="h1" level="h1" sx={{ fontWeight: 'xl', fontSize: 'clamp(1.875rem, 1.3636rem + 2.1818vw, 3rem)' }}>
+          sx={{
             fontWeight: 'xl',
             fontSize: 'clamp(1.875rem, 1.3636rem + 2.1818vw, 3rem)',
-          }}
-        >
+textAlign: 'center', marginTop: '20px' }}
           Welcome to SAPID Research
         </Typography>
       </h1>
+      </header>
     );
-  }
-  // Main function to log a message and return a styled Typography component
-  main(); // main function called to execute its logic
-}
-
+    console.log('Header component rendered');
+  }    
+   
 export default App;
