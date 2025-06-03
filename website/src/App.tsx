@@ -1,40 +1,70 @@
-import React from 'react';
-import Typography from '@mui/joy/Typography';
-import { createRoot } from 'react-dom/client';
-import './App.css';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { extendTheme, ThemeProvider } from '@mui/joy/styles';
-import { CssBaseline, Container, Box, Button, Grid } from '@mui/joy';
+import { CssBaseline } from '@mui/joy';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import Main from './components/Main';
+import LandingPage from './components/LandingPage';
+import ErrorBoundary from './components/ErrorBoundary';
+import { THEME } from './constants';
 
 const theme = extendTheme({
   colorSchemes: {
     light: {
       palette: {
+        mode: 'light',
         primary: {
-          50: '#e8f5e9',
-          100: '#c8e6c9',
-          200: '#a5d6a7',
-          300: '#81c784',
-          400: '#66bb6a',
-          500: '#4caf50',
-          600: '#43a047',
-          700: '#388e3c',
-          800: '#2e7d32',
-          900: '#1b5e20',
-        },
-        neutral: {
-          50: '#fafafa',
-          100: '#f5f5f5',
-          500: '#9e9e9e',
-          800: '#424242',
+          plainColor: THEME.colors.primary.main,
+          plainHoverBg: `rgba(${THEME.colors.primary.main}, 0.1)`,
+          plainActiveBg: `rgba(${THEME.colors.primary.main}, 0.2)`,
+          plainDisabledColor: `rgba(${THEME.colors.primary.main}, 0.5)`,
+          outlinedColor: THEME.colors.primary.main,
+          outlinedBorder: THEME.colors.primary.main,
+          outlinedHoverBg: `rgba(${THEME.colors.primary.main}, 0.1)`,
+          outlinedHoverBorder: THEME.colors.primary.dark,
+          outlinedActiveBg: `rgba(${THEME.colors.primary.main}, 0.2)`,
+          solidBg: THEME.colors.primary.main,
+          solidHoverBg: THEME.colors.primary.dark,
+          solidActiveBg: THEME.colors.primary.dark,
+          solidDisabledBg: `rgba(${THEME.colors.primary.main}, 0.5)`,
         },
         background: {
-          body: '#ffffff',
-          surface: '#f5f5f5',
+          body: THEME.colors.background.default,
+          surface: THEME.colors.background.paper,
         },
         text: {
-          primary: '#1a1a1a',
-          secondary: '#666666',
+          primary: THEME.colors.text.primary,
+          secondary: THEME.colors.text.secondary,
+        },
+      },
+    },
+  },
+  fontFamily: {
+    body: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
+    display:
+      '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
+  },
+  components: {
+    JoyButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: THEME.borderRadius.md,
+          transition: `all ${THEME.transitions.duration.medium}ms ${THEME.transitions.easing.easeInOut}`,
+        },
+      },
+    },
+    JoyCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: THEME.borderRadius.lg,
+          transition: `all ${THEME.transitions.duration.medium}ms ${THEME.transitions.easing.easeInOut}`,
+        },
+      },
+    },
+    JoyInput: {
+      styleOverrides: {
+        root: {
+          borderRadius: THEME.borderRadius.md,
         },
       },
     },
@@ -42,191 +72,60 @@ const theme = extendTheme({
 });
 
 function App() {
+  useEffect(() => {
+    // Add CSP meta tag
+    const meta = document.createElement('meta');
+    meta.httpEquiv = 'Content-Security-Policy';
+    meta.content =
+      "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'";
+    document.head.appendChild(meta);
+
+    // Add preconnect links for performance
+    const preconnectGoogle = document.createElement('link');
+    preconnectGoogle.rel = 'preconnect';
+    preconnectGoogle.href = 'https://fonts.googleapis.com';
+    document.head.appendChild(preconnectGoogle);
+
+    const preconnectGstatic = document.createElement('link');
+    preconnectGstatic.rel = 'preconnect';
+    preconnectGstatic.href = 'https://fonts.gstatic.com';
+    preconnectGstatic.crossOrigin = 'anonymous';
+    document.head.appendChild(preconnectGstatic);
+
+    // Add Inter font
+    const fontLink = document.createElement('link');
+    fontLink.rel = 'stylesheet';
+    fontLink.href =
+      'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap';
+    document.head.appendChild(fontLink);
+
+    return () => {
+      document.head.removeChild(meta);
+      document.head.removeChild(preconnectGoogle);
+      document.head.removeChild(preconnectGstatic);
+      document.head.removeChild(fontLink);
+    };
+  }, []);
+
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Box
-        component='main'
-        sx={{
-          minHeight: '100vh',
-          background: 'linear-gradient(135deg, #e8f5e9 0%, #4caf50 100%)',
-        }}
-      >
-        {/* Hero Section */}
-        <Container
-          maxWidth='lg'
-          sx={{
-            pt: { xs: 4, sm: 8, md: 12 },
-            pb: { xs: 8, sm: 12, md: 16 },
-          }}
-        >
-          <Grid container spacing={4}>
-            {/* Hero Image Section */}
-            <Grid xs={12} md={5}>
-              <Box
-                sx={{
-                  height: { xs: '250px', md: '400px' },
-                  background:
-                    'linear-gradient(45deg, #81c784 0%, #2e7d32 100%)',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
-                  boxShadow: 'lg',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  mb: { xs: 4, md: 0 },
-                }}
-              >
-                <Typography level='h2' sx={{ color: 'white' }}>
-                  [Your Hero Image]
-                </Typography>
-              </Box>
-            </Grid>
-
-            {/* Main Content */}
-            <Grid xs={12} md={7}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: '100%',
-                  justifyContent: 'center',
-                  gap: 4,
-                }}
-              >
-                <Typography
-                  level='h1'
-                  fontWeight='xl'
-                  fontSize='clamp(2.5rem, 2rem + 2vw, 3.5rem)'
-                  sx={{
-                    background: 'linear-gradient(45deg, #1b5e20, #388e3c)',
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    color: 'transparent',
-                    mb: 2,
-                  }}
-                >
-                  Welcome to SAPID Research
-                </Typography>
-
-                <Typography
-                  level='body-lg'
-                  sx={{
-                    color: 'text.secondary',
-                    mb: 4,
-                    maxWidth: '600px',
-                  }}
-                >
-                  Advancing the frontiers of knowledge through innovative
-                  research and collaborative discovery
-                </Typography>
-
-                <Button
-                  size='lg'
-                  variant='solid'
-                  color='primary'
-                  sx={{
-                    maxWidth: '200px',
-                    fontSize: 'lg',
-                    fontWeight: 600,
-                    py: 2,
-                  }}
-                >
-                  Start Exploring
-                </Button>
-              </Box>
-            </Grid>
-          </Grid>
-
-          {/* Three Column Features Section */}
-          <Grid container spacing={4} sx={{ mt: { xs: 6, md: 12 } }}>
-            {/* Column 1 */}
-            <Grid xs={12} md={4}>
-              <Box
-                sx={{
-                  p: 4,
-                  borderRadius: '12px',
-                  bgcolor: 'rgba(255, 255, 255, 0.9)',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 2,
-                }}
-              >
-                <Typography level='h3' fontWeight='lg'>
-                  Innovation
-                </Typography>
-                <Typography level='body-md'>
-                  Pushing boundaries with cutting-edge research methodologies
-                  and technologies
-                </Typography>
-              </Box>
-            </Grid>
-
-            {/* Column 2 */}
-            <Grid xs={12} md={4}>
-              <Box
-                sx={{
-                  p: 4,
-                  borderRadius: '12px',
-                  bgcolor: 'rgba(255, 255, 255, 0.9)',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 2,
-                }}
-              >
-                <Typography level='h3' fontWeight='lg'>
-                  Collaboration
-                </Typography>
-                <Typography level='body-md'>
-                  Building partnerships across disciplines and institutions
-                  worldwide
-                </Typography>
-              </Box>
-            </Grid>
-
-            {/* Column 3 */}
-            <Grid xs={12} md={4}>
-              <Box
-                sx={{
-                  p: 4,
-                  borderRadius: '12px',
-                  bgcolor: 'rgba(255, 255, 255, 0.9)',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 2,
-                }}
-              >
-                <Typography level='h3' fontWeight='lg'>
-                  Impact
-                </Typography>
-                <Typography level='body-md'>
-                  Creating meaningful change through research and discovery
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <TransitionGroup>
+          <CSSTransition
+            timeout={THEME.transitions.duration.medium}
+            classNames='page'
+          >
+            <Routes>
+              <Route path='/' element={<LandingPage />} />
+              <Route path='/main' element={<Main />} />
+              <Route path='*' element={<Navigate to='/' replace />} />
+            </Routes>
+          </CSSTransition>
+        </TransitionGroup>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
-}
-
-// Initialize the app
-const rootElement = document.getElementById('root');
-if (rootElement) {
-  const root = createRoot(rootElement);
-  root.render(
-    <React.StrictMode>
-      <Router>
-        <App />
-      </Router>
-    </React.StrictMode>
-  );
-} else {
-  console.error('Root element not found');
 }
 
 export default App;
