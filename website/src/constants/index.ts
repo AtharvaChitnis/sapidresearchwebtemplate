@@ -29,16 +29,16 @@ export const TESTIMONIALS = [
 export const THEME = {
   colors: {
     accent: {
-      light: '#E8F5E9', // Light green
-      main: '#4CAF50', // Material Green
-      dark: '#2E7D32', // Dark green
-      gradient: 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)',
+      light: '#C8E6C9', // Lighter dark green
+      main: '#2E7D32', // Darker Material Green
+      dark: '#1B5E20', // Even darker green
+      gradient: 'linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%)',
     },
     primary: {
-      light: '#E3F2FD', // Lighter blue
-      main: '#2196F3', // Material Blue
-      dark: '#1565C0', // Darker blue
-      gradient: 'linear-gradient(135deg, #2196F3 0%, #1565C0 100%)',
+      light: '#C8E6C9', // Lighter dark green
+      main: '#2E7D32', // Darker Material Green
+      dark: '#1B5E20', // Even darker green
+      gradient: 'linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%)',
     },
     secondary: {
       light: '#F3E5F5', // Light purple
@@ -47,13 +47,13 @@ export const THEME = {
     },
     background: {
       default: '#FFFFFF',
-      paper: '#F5F5F5',
-      gradient: 'linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%)',
+      paper: '#F1F8F1', // Slightly darker green tinted background
+      gradient: 'linear-gradient(135deg, #F1F8F1 0%, #FFFFFF 100%)',
     },
     text: {
-      primary: '#212121',
-      secondary: '#757575',
-      hint: '#9E9E9E',
+      primary: '#1B5E20', // Darkest green for primary text
+      secondary: '#2E7D32', // Dark green for secondary text
+      hint: '#558B2F', // Medium dark green for hints
     },
   },
   spacing: {
